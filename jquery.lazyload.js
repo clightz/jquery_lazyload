@@ -16,7 +16,7 @@
 (function($, window, document, undefined) {
     var $window = $(window);
 
-    $.fn.lazyload = function(options) {
+    $.fn.lazyload = function(options,callback) {
         var elements = this;
         var $container;
         var settings = {
@@ -113,9 +113,11 @@
                                 $self.css("background-image", "url('" + original + "')");
                             }
                             $self[settings.effect](settings.effect_speed);
-
+                            /* Callback after this image loaded */
                             self.loaded = true;
-
+                            if(callback){
+                                callback.call(self)
+                            }
                             /* Remove image from array so it is not looped next time. */
                             var temp = $.grep(elements, function(element) {
                                 return !element.loaded;
